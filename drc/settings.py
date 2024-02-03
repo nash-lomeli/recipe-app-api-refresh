@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'drc.apps.authentication.apps',
     'drc.apps.core',
     'drc.apps.profiles',
+    'drc.apps.follow',
 ]
 
 MIDDLEWARE = [

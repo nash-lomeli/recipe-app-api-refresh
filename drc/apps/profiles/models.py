@@ -34,17 +34,17 @@ class Profile(TimestampedModel):
     def __str__(self):
         return self.user.email
 
-    # def following(self):
-    #     return self.follow.count()
+    def following(self):
+        return self.follow.count()
 
-    # def followers(self):
-    #     return self.followed_by.count()
+    def followers(self):
+        return self.followed_by.count()
     
-    # def is_following(self, profile):
-    #     return self.follow.filter(pk=profile.pk).exists()
+    def is_following(self, profile):
+        return self.follow.filter(pk=profile.pk).exists()
 
-    # def is_follower(self, profile):
-    #     return self.followed_by.filter(pk=profile.pk).exists()
+    def is_follower(self, profile):
+        return self.followed_by.filter(pk=profile.pk).exists()
     
     # def has_like(self, recipe):
     #     return self.like.filter(recipe=recipe).exists()
