@@ -44,3 +44,4 @@ class ProfieListAPIView(generics.ListAPIView):
         .only('id','user__id','user__username')
     renderer_classes = (renderers.ProfileJSONRenderer,)
     serializer_class = serializers.ShortProfileSerializer
+
