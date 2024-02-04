@@ -55,8 +55,8 @@ class Profile(TimestampedModel):
     # def has_completed(self, instruction):
     #     return self.completed_instruction.filter(instruction=instruction).exists()
 
-    # def recipe_note(self, recipe):
-    #     return self.note_recipe.filter(recipe=recipe).first()
+    def recipe_note(self, recipe):
+        return self.note_recipe.filter(recipe=recipe).first()
     
     # def recipe_count(self):
     #     return self.recipes.count()

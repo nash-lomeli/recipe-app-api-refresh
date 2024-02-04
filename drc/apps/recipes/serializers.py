@@ -4,7 +4,7 @@ from drc.apps.profiles.serializers import ShortProfileSerializer
 
 from . import models
 
-# from src.apps.notes import serializers as note_serializers
+from drc.apps.notes import serializers as note_serializers
 
 # class RecipeImageSerializer(serializers.ModelSerializer):
 
@@ -119,7 +119,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     slug = serializers.SlugField(required=False)
     has_like = serializers.SerializerMethodField(read_only=True, required=False)
     has_cooked = serializers.SerializerMethodField(read_only=True, required=False)
-    # recipe_note = serializers.SerializerMethodField(read_only=True, required=False)
+    recipe_note = serializers.SerializerMethodField(read_only=True, required=False)
     instructions = InstructionSerializer(many=True, read_only=True)
     items = ItemSerializer(many=True, read_only=True)
     # RecipeImage = RecipeImageSerializer(many=True, read_only=True, source='recipe_image')
@@ -130,7 +130,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         fields = (
             'id','author','title','description','cuisine',
             'total_time','servings','slug','is_purchasable',
-            #'recipe_note',
+            'recipe_note',
             'has_like','like_count',
             'has_cooked',
             'ingredient_count',
@@ -177,18 +177,18 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         return request.user.profile.has_cooked(recipe)
     
-    # def get_recipe_note(self, obj):
-    #     request = self.context.get('request', None)
+    def get_recipe_note(self, obj):
+        request = self.context.get('request', None)
 
-    #     if request is None:
-    #         return None
+        if request is None:
+            return None
         
-    #     if request.user.is_authenticated == False:
-    #         return None
+        if request.user.is_authenticated == False:
+            return None
 
-    #     recipe = obj
+        recipe = obj
 
-    #     return note_serializers.ShortNoteRecipeSerializer(request.user.profile.recipe_note(recipe)).data
+        return note_serializers.ShortNoteRecipeSerializer(request.user.profile.recipe_note(recipe)).data
 
 
 class ShortRecipeSerializer(serializers.ModelSerializer):
