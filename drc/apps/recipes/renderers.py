@@ -19,14 +19,14 @@ class InstructionJSONRenderer(SrcJSONRenderer):
 #     object_label = 'instruction_image'
 
 
-# class ItemJSONRenderer(SrcJSONRenderer):
-#     object_label = 'item'
-#     object_label_plural = 'items'
+class ItemJSONRenderer(SrcJSONRenderer):
+    object_label = 'item'
+    object_label_plural = 'items'
 
 
-# class IngredientJSONRenderer(SrcJSONRenderer):
-#     object_label = 'ingredient'
-#     object_label_plural = 'ingredients'
+class IngredientJSONRenderer(SrcJSONRenderer):
+    object_label = 'ingredient'
+    object_label_plural = 'ingredients'
 
 
 # class InstructionIngredientJSONRenderer(SrcJSONRenderer):

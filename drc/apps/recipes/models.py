@@ -101,29 +101,29 @@ class Instruction(TimestampedModel):
         return self.body
 
 
-# class Item(TimestampedModel):
-#     name = models.CharField(max_length=255)
-#     display_order = models.IntegerField()
+class Item(TimestampedModel):
+    name = models.CharField(max_length=255)
+    display_order = models.IntegerField()
 
-#     recipe = models.ForeignKey(
-#         'recipes.Recipe',
-#         on_delete=models.CASCADE,
-#         related_name='items',
-#     )
+    recipe = models.ForeignKey(
+        'recipes.Recipe',
+        on_delete=models.CASCADE,
+        related_name='items',
+    )
 
-#     def __str__(self):
-#         return self.name
+    def __str__(self):
+        return self.name
 
 
-# class Ingredient(TimestampedModel):
-#     name = models.CharField(max_length=255)
-#     display_order = models.IntegerField()
+class Ingredient(TimestampedModel):
+    name = models.CharField(max_length=255)
+    display_order = models.IntegerField()
 
-#     item = models.ForeignKey(
-#         'recipes.Item',
-#         on_delete=models.CASCADE,
-#         related_name='ingredients',
-#     )
+    item = models.ForeignKey(
+        'recipes.Item',
+        on_delete=models.CASCADE,
+        related_name='ingredients',
+    )
 
-#     def __str__(self):
-#         return self.name
+    def __str__(self):
+        return self.name

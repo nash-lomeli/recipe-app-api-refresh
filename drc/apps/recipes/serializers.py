@@ -82,36 +82,36 @@ class InstructionSerializer(serializers.ModelSerializer):
     #     return request.user.profile.has_completed(instruction)
 
 
-# class IngredientSerializer(serializers.ModelSerializer):
+class IngredientSerializer(serializers.ModelSerializer):
 
-#     class Meta:
-#         model = models.Ingredient
-#         fields = (
-#             'id','name','display_order'
-#         )
-#         read_only_fields = ('id',)
+    class Meta:
+        model = models.Ingredient
+        fields = (
+            'id','name','display_order'
+        )
+        read_only_fields = ('id',)
 
-#     def create(self, validated_data):
-#         item = self.context.get('item')
+    def create(self, validated_data):
+        item = self.context.get('item')
 
-#         return models.Ingredient.objects.create(item=item, **validated_data)
+        return models.Ingredient.objects.create(item=item, **validated_data)
 
 
-# class ItemSerializer(serializers.ModelSerializer):
+class ItemSerializer(serializers.ModelSerializer):
 
-#     ingredients = IngredientSerializer(many=True, read_only=True)
+    ingredients = IngredientSerializer(many=True, read_only=True)
 
-#     class Meta:
-#         model = models.Item
-#         fields = (
-#             'id','name','display_order','ingredients'
-#         )
-#         read_only_fields = ('id',)
+    class Meta:
+        model = models.Item
+        fields = (
+            'id','name','display_order','ingredients'
+        )
+        read_only_fields = ('id',)
 
-#     def create(self, validated_data):
-#         recipe = self.context.get('recipe')
+    def create(self, validated_data):
+        recipe = self.context.get('recipe')
         
-#         return models.Item.objects.create(recipe=recipe, **validated_data)
+        return models.Item.objects.create(recipe=recipe, **validated_data)
 
 
 class RecipeSerializer(serializers.ModelSerializer):

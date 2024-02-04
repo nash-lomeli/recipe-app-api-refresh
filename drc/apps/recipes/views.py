@@ -345,110 +345,110 @@ class InstructionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIV
 #         return queryset
 
 
-# class ItemListCreateAPIView(generics.ListCreateAPIView):
-#     serializer_class = serializers.ItemSerializer
-#     permission_classes = (AllowAny,)
-#     renderer_classes = (renderers.ItemJSONRenderer,)
-#     lookup_field = 'recipe__slug'
-#     lookup_url_kwarg = 'recipe_slug'
-#     queryset = models.Item.objects.prefetch_related('ingredients').all()
+class ItemListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = serializers.ItemSerializer
+    permission_classes = (AllowAny,)
+    renderer_classes = (renderers.ItemJSONRenderer,)
+    lookup_field = 'recipe__slug'
+    lookup_url_kwarg = 'recipe_slug'
+    queryset = models.Item.objects.prefetch_related('ingredients').all()
 
-#     def filter_queryset(self, queryset):
-#         filters = {self.lookup_field: self.kwargs[self.lookup_url_kwarg]}
+    def filter_queryset(self, queryset):
+        filters = {self.lookup_field: self.kwargs[self.lookup_url_kwarg]}
 
-#         return queryset.filter(**filters)
+        return queryset.filter(**filters)
 
-#     def create(self, request, recipe_slug=None):
+    def create(self, request, recipe_slug=None):
 
-#         context = {
-#             'author': self.request.user
-#         }
+        context = {
+            'author': self.request.user
+        }
 
-#         serializer_data = request.data.get('item', {})
+        serializer_data = request.data.get('item', {})
 
-#         try:
-#             context['recipe'] = models.Recipe.objects.get(slug=recipe_slug)
-#         except models.Recipe.DoesNotExist:
-#             raise NotFound('A recipe with this slug does not exist.')
+        try:
+            context['recipe'] = models.Recipe.objects.get(slug=recipe_slug)
+        except models.Recipe.DoesNotExist:
+            raise NotFound('A recipe with this slug does not exist.')
 
-#         serializer = self.serializer_class(
-#             data=serializer_data,
-#             context=context,
-#         )
+        serializer = self.serializer_class(
+            data=serializer_data,
+            context=context,
+        )
 
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# class ItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-#     serializer_class = serializers.ItemSerializer
-#     permission_classes = (AllowAny,)
-#     renderer_classes = (renderers.ItemJSONRenderer,)
+class ItemRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = serializers.ItemSerializer
+    permission_classes = (AllowAny,)
+    renderer_classes = (renderers.ItemJSONRenderer,)
     
-#     def get_object(self):
-#         recipe_slug = self.kwargs['recipe_slug']
-#         item_id = self.kwargs['item_id']
+    def get_object(self):
+        recipe_slug = self.kwargs['recipe_slug']
+        item_id = self.kwargs['item_id']
 
-#         try:
-#             queryset = models.Item.objects.get(id=item_id, recipe__slug=recipe_slug)
-#         except models.Item.DoesNotExist:
-#             raise NotFound('An item tied to this slug does not exist.')
+        try:
+            queryset = models.Item.objects.get(id=item_id, recipe__slug=recipe_slug)
+        except models.Item.DoesNotExist:
+            raise NotFound('An item tied to this slug does not exist.')
 
-#         return queryset
-
-
-# class IngredientListCreateAPIView(generics.ListCreateAPIView):
-#     serializer_class = serializers.IngredientSerializer
-#     permission_classes = (AllowAny,)
-#     renderer_classes = (renderers.IngredientJSONRenderer,)
-#     lookup_field = 'item__id'
-#     lookup_url_kwarg = 'item_id'
-#     queryset = models.Ingredient.objects.all()
-
-#     def filter_queryset(self, queryset):
-#         filters = {self.lookup_field: self.kwargs[self.lookup_url_kwarg]}
-
-#         return queryset.filter(**filters)
-
-#     def create(self, request, recipe_slug=None, item_id=None):
-
-#         context = {
-#             'author': self.request.user.profile
-#         }
-
-#         serializer_data = request.data.get('ingredient', {})
-
-#         try:
-#             context['item'] = models.Item.objects.get(id=item_id)
-#         except models.Item.DoesNotExist:
-#             raise NotFound('A item with this id does not exist.')
-
-#         serializer = self.serializer_class(
-#             data=serializer_data,
-#             context=context,
-#         )
-
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return queryset
 
 
-# class IngredientRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-#     serializer_class = serializers.IngredientSerializer
-#     permission_classes = (AllowAny,)
-#     renderer_classes = (renderers.IngredientJSONRenderer,)
+class IngredientListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = serializers.IngredientSerializer
+    permission_classes = (AllowAny,)
+    renderer_classes = (renderers.IngredientJSONRenderer,)
+    lookup_field = 'item__id'
+    lookup_url_kwarg = 'item_id'
+    queryset = models.Ingredient.objects.all()
+
+    def filter_queryset(self, queryset):
+        filters = {self.lookup_field: self.kwargs[self.lookup_url_kwarg]}
+
+        return queryset.filter(**filters)
+
+    def create(self, request, recipe_slug=None, item_id=None):
+
+        context = {
+            'author': self.request.user.profile
+        }
+
+        serializer_data = request.data.get('ingredient', {})
+
+        try:
+            context['item'] = models.Item.objects.get(id=item_id)
+        except models.Item.DoesNotExist:
+            raise NotFound('A item with this id does not exist.')
+
+        serializer = self.serializer_class(
+            data=serializer_data,
+            context=context,
+        )
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+class IngredientRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = serializers.IngredientSerializer
+    permission_classes = (AllowAny,)
+    renderer_classes = (renderers.IngredientJSONRenderer,)
     
-#     def get_object(self):
-#         item_id = self.kwargs['item_id']
-#         ingredient_id = self.kwargs['ingredient_id']
+    def get_object(self):
+        item_id = self.kwargs['item_id']
+        ingredient_id = self.kwargs['ingredient_id']
 
-#         try:
-#             queryset = models.Ingredient.objects.get(id=ingredient_id, item__id=item_id)
-#         except models.Ingredient.DoesNotExist:
-#             raise NotFound('An ingredient tied to this item does not exist.')
+        try:
+            queryset = models.Ingredient.objects.get(id=ingredient_id, item__id=item_id)
+        except models.Ingredient.DoesNotExist:
+            raise NotFound('An ingredient tied to this item does not exist.')
 
-#         return queryset
+        return queryset
 
 class RecipeFeedListAPIView(generics.ListAPIView):
     serializer_class = serializers.ShortRecipeSerializer
