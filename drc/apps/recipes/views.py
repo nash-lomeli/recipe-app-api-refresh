@@ -25,8 +25,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     lookup_field = 'slug'
     queryset = models.Recipe.objects \
         .select_related('author','author__user') \
-        .prefetch_related('instructions',#'instructions__instruction_ingredient','items','items__ingredients'
-        ) \
+        .prefetch_related('instructions','instructions__instruction_ingredient','items','items__ingredients') \
         .only('id','slug','title','description','total_time','servings','cuisine','created_at','updated_at',
             'author__id','author__user__username') \
         .all()
@@ -53,9 +52,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
         if cuisine is not None:
             queryset = queryset.filter(cuisine__iexact=cuisine)
 
-        # liked = self.request.query_params.get('liked', None)
-        # if liked is not None:
-        #     queryset = queryset.filter(like__user__user__username=liked)
+        liked = self.request.query_params.get('liked', None)
+        if liked is not None:
+            queryset = queryset.filter(like__user__user__username=liked)
 
         # cooked = self.request.query_params.get('cooked', None)
         # if cooked is not None:
@@ -126,19 +125,15 @@ class RecipeViewSet(viewsets.ModelViewSet):
 #    @method_decorator(cache_per_user(60*5))
     def list(self, request):
 
-        # likes = {}
-        # recipes = models.Recipe.objects.annotate(like_count=Count('like__id')).values_list('id', 'like_count')
+        likes = {}
+        recipes = models.Recipe.objects.annotate(like_count=Count('like__id')).values_list('id', 'like_count')
 
-        # for recipe_id, like_count in recipes:
-        #     likes[recipe_id] = like_count
-
-        # context = {
-        #     'request': request,
-        #     'likes': likes,
-        # }
+        for recipe_id, like_count in recipes:
+            likes[recipe_id] = like_count
 
         context = {
             'request': request,
+            'likes': likes,
         }
         
         queryset = self.get_queryset()
@@ -463,16 +458,16 @@ class RecipeFeedListAPIView(generics.ListAPIView):
         # authored recipes from people I follow
         created_recipes = models.Recipe.objects.all().filter(author__in=following)
 
-        # # liked recipes from people I follow
-        # following_likes = like_models.Like.objects.all().filter(user_id__in=following)
-        # liked_recipes = models.Recipe.objects.all().filter(like__in=following_likes)
+        # liked recipes from people I follow
+        following_likes = like_models.Like.objects.all().filter(user_id__in=following)
+        liked_recipes = models.Recipe.objects.all().filter(like__in=following_likes)
 
         # cooked recipes from people I follow
         # cooked_recipes = cooked_models.CookedRecipe.objects.all().filter(user_id__in=following)
         # cooked_recipes = models.Recipe.objects.all().filter(cooked_recipe__in=cooked_recipes)
 
         # union of individual results
-        queryset = created_recipes #| liked_recipes | cooked_recipes
+        queryset = created_recipes | liked_recipes | cooked_recipes
         return queryset.distinct()
 
 

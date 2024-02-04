@@ -117,7 +117,7 @@ class ItemSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     author = ShortProfileSerializer(read_only=True)
     slug = serializers.SlugField(required=False)
-    # has_like = serializers.SerializerMethodField(read_only=True, required=False)
+    has_like = serializers.SerializerMethodField(read_only=True, required=False)
     # has_cooked = serializers.SerializerMethodField(read_only=True, required=False)
     # recipe_note = serializers.SerializerMethodField(read_only=True, required=False)
     # instructions = InstructionSerializer(many=True, read_only=True)
@@ -130,12 +130,15 @@ class RecipeSerializer(serializers.ModelSerializer):
         fields = (
             'id','author','title','description','cuisine',
             'total_time','servings','slug','is_purchasable',
-            #'recipe_note','has_like','like_count','has_cooked','ingredient_count',
+            #'recipe_note',
+            'has_like','like_count',
+            #'has_cooked','ingredient_count',
             'created_at','updated_at',
             #'RecipeImage','instructions','items',
         )
-        read_only_fields = ('id','slug'
-            #,'has_like','like_count','has_cooked','ingredient_count',
+        read_only_fields = ('id','slug',
+            'has_like','like_count',
+            #'has_cooked','ingredient_count',
             'created_at','updated_at',
         )
 
@@ -145,18 +148,18 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         return models.Recipe.objects.create(author=author, **validated_data)
     
-    # def get_has_like(self, obj):
-    #     request = self.context.get('request', None)
+    def get_has_like(self, obj):
+        request = self.context.get('request', None)
 
-    #     if request is None:
-    #         return False
+        if request is None:
+            return False
         
-    #     if request.user.is_authenticated == False:
-    #         return False
+        if request.user.is_authenticated == False:
+            return False
         
-    #     recipe = obj
+        recipe = obj
 
-    #     return request.user.profile.has_like(recipe)
+        return request.user.profile.has_like(recipe)
 
     # def get_has_cooked(self, obj):
     #     request = self.context.get('request', None)
@@ -187,41 +190,41 @@ class RecipeSerializer(serializers.ModelSerializer):
 
 class ShortRecipeSerializer(serializers.ModelSerializer):
     author = ShortProfileSerializer(read_only=True)
-    # has_like = serializers.SerializerMethodField(read_only=True, required=False)
-    # like_count = serializers.SerializerMethodField(read_only=True, required=False)
+    has_like = serializers.SerializerMethodField(read_only=True, required=False)
+    like_count = serializers.SerializerMethodField(read_only=True, required=False)
     # RecipeImage = RecipeImageSerializer(many=True, read_only=True, source='recipe_image')
 
     class Meta:
         model = models.Recipe
         fields = (
-             'id','title','total_time','slug','author',#,'is_purchasable','has_like','like_count','RecipeImage',
+             'id','title','total_time','slug','author','has_like','like_count',#,'is_purchasable','RecipeImage',
         )
         read_only_fields = (
-             'id','title','total_time','slug','author',#,'is_purchasable','has_like','like_count',,'RecipeImage',
+             'id','title','total_time','slug','author','has_like','like_count',#,'is_purchasable',,'RecipeImage',
         )
 
-    # def get_has_like(self, obj):
-    #     request = self.context.get('request', None)
+    def get_has_like(self, obj):
+        request = self.context.get('request', None)
 
-    #     if request is None:
-    #         return False
+        if request is None:
+            return False
         
-    #     if request.user.is_authenticated == False:
-    #         return False
+        if request.user.is_authenticated == False:
+            return False
         
-    #     recipe = obj
+        recipe = obj
 
-    #     return request.user.profile.has_like(recipe)
+        return request.user.profile.has_like(recipe)
 
-    # def get_like_count(self, obj):
-    #     likes = self.context.get('likes', None)
+    def get_like_count(self, obj):
+        likes = self.context.get('likes', None)
 
-    #     if likes is None:
-    #         return None
+        if likes is None:
+            return None
 
-    #     result = dict((k, likes[k]) for k in [obj.id] if k in likes) 
+        result = dict((k, likes[k]) for k in [obj.id] if k in likes) 
 
-    #     return result[obj.id]
+        return result[obj.id]
 
     # def get_has_cooked(self, obj):
     #     request = self.context.get('request', None)

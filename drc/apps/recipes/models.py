@@ -75,8 +75,8 @@ class Recipe(TimestampedModel):
     # def ingredient_count(self):
     #     return Ingredient.objects.filter(item__recipe_id=self).count()
     
-    # def like_count(self):
-    #     return self.like.count()
+    def like_count(self):
+        return self.like.count()
 
 
 class Instruction(TimestampedModel):

@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 
 from drc.apps.core.models import TimestampedModel
-# from drc.apps.recipes import models as recipe_models
+from drc.apps.recipes import models as recipe_models
 
 from django.db.models import Count
 
@@ -46,8 +46,8 @@ class Profile(TimestampedModel):
     def is_follower(self, profile):
         return self.followed_by.filter(pk=profile.pk).exists()
     
-    # def has_like(self, recipe):
-    #     return self.like.filter(recipe=recipe).exists()
+    def has_like(self, recipe):
+        return self.like.filter(recipe=recipe).exists()
     
     # def has_cooked(self, recipe):
     #     return self.cooked_recipe.filter(recipe=recipe).exists()
@@ -61,9 +61,9 @@ class Profile(TimestampedModel):
     # def recipe_count(self):
     #     return self.recipes.count()
 
-    # def like_count(self):
-    #     result = recipe_models.Recipe.objects.filter(author=self).aggregate(like_count=Count('like__id'))
-    #     return result['like_count']
+    def like_count(self):
+        result = recipe_models.Recipe.objects.filter(author=self).aggregate(like_count=Count('like__id'))
+        return result['like_count']
 
     def is_merchant(self):
         return self.user.groups.filter(name='Merchant').exists()
