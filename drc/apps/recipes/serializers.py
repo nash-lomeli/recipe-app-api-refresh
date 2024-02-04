@@ -49,15 +49,15 @@ class InstructionSerializer(serializers.ModelSerializer):
 
     # Commenting out InstructionImage until we can provide images at the instruction level
     #InstructionImage = InstructionImageSerializer(many=True, read_only=True, source='instruction_image')
-    # instruction_ingredients = InstructionIngredientSerializer(many=True, read_only=True, source='instruction_ingredient')
+    instruction_ingredients = InstructionIngredientSerializer(many=True, read_only=True, source='instruction_ingredient')
     # is_completed = serializers.SerializerMethodField(read_only=True, required=False)
 
 
     class Meta:
         model = models.Instruction
         fields = (
-            'id','body','display_order',)
-            #'instruction_ingredients',
+            'id','body','display_order',
+            'instruction_ingredients',)
             #'is_completed',
         #)
         read_only_fields = ('id',)#'is_completed',)
@@ -120,8 +120,8 @@ class RecipeSerializer(serializers.ModelSerializer):
     has_like = serializers.SerializerMethodField(read_only=True, required=False)
     # has_cooked = serializers.SerializerMethodField(read_only=True, required=False)
     # recipe_note = serializers.SerializerMethodField(read_only=True, required=False)
-    # instructions = InstructionSerializer(many=True, read_only=True)
-    # items = ItemSerializer(many=True, read_only=True)
+    instructions = InstructionSerializer(many=True, read_only=True)
+    items = ItemSerializer(many=True, read_only=True)
     # RecipeImage = RecipeImageSerializer(many=True, read_only=True, source='recipe_image')
 
 
@@ -132,13 +132,16 @@ class RecipeSerializer(serializers.ModelSerializer):
             'total_time','servings','slug','is_purchasable',
             #'recipe_note',
             'has_like','like_count',
-            #'has_cooked','ingredient_count',
+            #'has_cooked',
+            'ingredient_count',
             'created_at','updated_at',
-            #'RecipeImage','instructions','items',
+            #'RecipeImage',
+            'instructions','items',
         )
         read_only_fields = ('id','slug',
             'has_like','like_count',
-            #'has_cooked','ingredient_count',
+            #'has_cooked',
+            'ingredient_count',
             'created_at','updated_at',
         )
 

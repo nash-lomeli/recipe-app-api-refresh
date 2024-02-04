@@ -8,7 +8,7 @@ from drc.apps.core.permissions import IsOwnerOrReadOnly
 
 from . import models, serializers, renderers
 from drc.apps.core.mixins import MultipleFieldLookupMixin
-# from src.apps.likes import models as like_models
+from drc.apps.likes import models as like_models
 # from src.apps.cooked import models as cooked_models
 
 #from silk.profiling.profiler import silk_profile
@@ -248,8 +248,7 @@ class InstructionListCreateAPIView(generics.ListCreateAPIView):
     renderer_classes = (renderers.InstructionJSONRenderer,)
     lookup_field = 'recipe__slug'
     lookup_url_kwarg = 'recipe_slug'
-    queryset = models.Instruction.objects.all()
-    #queryset = models.Instruction.objects.prefetch_related('instruction_ingredient').all()
+    queryset = models.Instruction.objects.prefetch_related('instruction_ingredient').all()
 
     def filter_queryset(self, queryset):
         filters = {self.lookup_field: self.kwargs[self.lookup_url_kwarg]}
