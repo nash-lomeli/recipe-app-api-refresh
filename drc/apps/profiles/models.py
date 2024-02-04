@@ -49,8 +49,8 @@ class Profile(TimestampedModel):
     def has_like(self, recipe):
         return self.like.filter(recipe=recipe).exists()
     
-    # def has_cooked(self, recipe):
-    #     return self.cooked_recipe.filter(recipe=recipe).exists()
+    def has_cooked(self, recipe):
+        return self.cooked_recipe.filter(recipe=recipe).exists()
 
     # def has_completed(self, instruction):
     #     return self.completed_instruction.filter(instruction=instruction).exists()

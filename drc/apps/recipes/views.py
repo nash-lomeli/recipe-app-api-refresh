@@ -9,7 +9,7 @@ from drc.apps.core.permissions import IsOwnerOrReadOnly
 from . import models, serializers, renderers
 from drc.apps.core.mixins import MultipleFieldLookupMixin
 from drc.apps.likes import models as like_models
-# from src.apps.cooked import models as cooked_models
+from drc.apps.cooked import models as cooked_models
 
 #from silk.profiling.profiler import silk_profile
 
@@ -56,9 +56,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
         if liked is not None:
             queryset = queryset.filter(like__user__user__username=liked)
 
-        # cooked = self.request.query_params.get('cooked', None)
-        # if cooked is not None:
-        #     queryset = queryset.filter(cooked_recipe__user__user__username=cooked)
+        cooked = self.request.query_params.get('cooked', None)
+        if cooked is not None:
+            queryset = queryset.filter(cooked_recipe__user__user__username=cooked)
 
         return queryset
 
@@ -462,8 +462,8 @@ class RecipeFeedListAPIView(generics.ListAPIView):
         liked_recipes = models.Recipe.objects.all().filter(like__in=following_likes)
 
         # cooked recipes from people I follow
-        # cooked_recipes = cooked_models.CookedRecipe.objects.all().filter(user_id__in=following)
-        # cooked_recipes = models.Recipe.objects.all().filter(cooked_recipe__in=cooked_recipes)
+        cooked_recipes = cooked_models.CookedRecipe.objects.all().filter(user_id__in=following)
+        cooked_recipes = models.Recipe.objects.all().filter(cooked_recipe__in=cooked_recipes)
 
         # union of individual results
         queryset = created_recipes | liked_recipes | cooked_recipes

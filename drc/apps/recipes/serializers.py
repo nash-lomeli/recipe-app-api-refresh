@@ -118,7 +118,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     author = ShortProfileSerializer(read_only=True)
     slug = serializers.SlugField(required=False)
     has_like = serializers.SerializerMethodField(read_only=True, required=False)
-    # has_cooked = serializers.SerializerMethodField(read_only=True, required=False)
+    has_cooked = serializers.SerializerMethodField(read_only=True, required=False)
     # recipe_note = serializers.SerializerMethodField(read_only=True, required=False)
     instructions = InstructionSerializer(many=True, read_only=True)
     items = ItemSerializer(many=True, read_only=True)
@@ -132,7 +132,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             'total_time','servings','slug','is_purchasable',
             #'recipe_note',
             'has_like','like_count',
-            #'has_cooked',
+            'has_cooked',
             'ingredient_count',
             'created_at','updated_at',
             #'RecipeImage',
@@ -164,18 +164,18 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         return request.user.profile.has_like(recipe)
 
-    # def get_has_cooked(self, obj):
-    #     request = self.context.get('request', None)
+    def get_has_cooked(self, obj):
+        request = self.context.get('request', None)
 
-    #     if request is None:
-    #         return False
+        if request is None:
+            return False
         
-    #     if request.user.is_authenticated == False:
-    #         return False
+        if request.user.is_authenticated == False:
+            return False
         
-    #     recipe = obj
+        recipe = obj
 
-    #     return request.user.profile.has_cooked(recipe)
+        return request.user.profile.has_cooked(recipe)
     
     # def get_recipe_note(self, obj):
     #     request = self.context.get('request', None)
@@ -229,15 +229,15 @@ class ShortRecipeSerializer(serializers.ModelSerializer):
 
         return result[obj.id]
 
-    # def get_has_cooked(self, obj):
-    #     request = self.context.get('request', None)
+    def get_has_cooked(self, obj):
+        request = self.context.get('request', None)
 
-    #     if request is None:
-    #         return False
+        if request is None:
+            return False
         
-    #     if request.user.is_authenticated == False:
-    #         return False
+        if request.user.is_authenticated == False:
+            return False
         
-    #     recipe = obj
+        recipe = obj
 
-    #     return request.user.profile.has_cooked(recipe)
+        return request.user.profile.has_cooked(recipe)
