@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'storages',
+
     'drc.apps.authentication',
     'drc.apps.authentication.apps',
     'drc.apps.core',
@@ -102,6 +104,19 @@ REST_FRAMEWORK = {
     ),
 }
 
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        # "OPTIONS": {
+        #     "AWS_ACCESS_KEY_ID": 'AKIA5FTZC3FKLTBAORXM',
+        #     "AWS_SECRET_ACCESS_KEY": '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',
+        #     "AWS_STORAGE_BUCKET_NAME": 'recipe-app-api-refresh-recipe-images-1',
+
+        #     "AWS_S3_FILE_OVERWRITE": False,
+        # },
+    },
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -142,3 +157,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AWS_ACCESS_KEY_ID = 'AKIA5FTZC3FKLTBAORXM'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'recipe-app-api-refresh-recipe-images-1'
+
+AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None

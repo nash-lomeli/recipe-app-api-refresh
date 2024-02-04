@@ -33,16 +33,16 @@ class RecipeViewSet(viewsets.ModelViewSet):
 #    @silk_profile(name='get_queryset')
     def get_queryset(self):
 
-            #     queryset = models.Recipe.objects \
-            # .select_related('author','author__user') \
-            # #.prefetch_related('recipe_image') \
-            # .only('id','title','slug','total_time','slug','author__id','author__user__username') \
-            # .all()
-
         queryset = models.Recipe.objects \
             .select_related('author','author__user') \
+            .prefetch_related('recipe_image') \
             .only('id','title','slug','total_time','slug','author__id','author__user__username') \
             .all()
+
+        # queryset = models.Recipe.objects \
+        #     .select_related('author','author__user') \
+        #     .only('id','title','slug','total_time','slug','author__id','author__user__username') \
+        #     .all()
 
         author = self.request.query_params.get('author', None)
         if author is not None:
@@ -145,50 +145,50 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-# class RecipeImageCreateAPIView(generics.CreateAPIView):
-#     serializer_class = serializers.RecipeImageSerializer
-#     permission_classes = (AllowAny,)
-#     renderer_classes = (renderers.RecipeImageJSONRenderer,)
+class RecipeImageCreateAPIView(generics.CreateAPIView):
+    serializer_class = serializers.RecipeImageSerializer
+    permission_classes = (AllowAny,)
+    renderer_classes = (renderers.RecipeImageJSONRenderer,)
 
     
-#     def post(self, request, recipe_slug=None):
+    def post(self, request, recipe_slug=None):
 
-#         context = {
-#             'author': self.request.user
-#         }
+        context = {
+            'author': self.request.user
+        }
 
-#         try:
-#             context['recipe'] = models.Recipe.objects.get(slug=recipe_slug)
-#         except models.Recipe.DoesNotExist:
-#             raise NotFound('A recipe with this slug does not exist.')
+        try:
+            context['recipe'] = models.Recipe.objects.get(slug=recipe_slug)
+        except models.Recipe.DoesNotExist:
+            raise NotFound('A recipe with this slug does not exist.')
 
-#         serializer = self.serializer_class(
-#             data=request.data,
-#             context=context
-#         )
+        serializer = self.serializer_class(
+            data=request.data,
+            context=context
+        )
 
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-#         return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
 
 
-# class RecipeImageRetrieveUpdateDestroyAPIView(MultipleFieldLookupMixin,
-#     generics.RetrieveUpdateDestroyAPIView):
-#     serializer_class = serializers.RecipeImageSerializer
-#     permission_classes = (AllowAny,)
-#     renderer_classes = (renderers.RecipeImageJSONRenderer,)
+class RecipeImageRetrieveUpdateDestroyAPIView(MultipleFieldLookupMixin,
+    generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = serializers.RecipeImageSerializer
+    permission_classes = (AllowAny,)
+    renderer_classes = (renderers.RecipeImageJSONRenderer,)
 
-#     def get_object(self):
-#         recipe_slug = self.kwargs['recipe_slug']
-#         photo_id = self.kwargs['photo_id']
+    def get_object(self):
+        recipe_slug = self.kwargs['recipe_slug']
+        photo_id = self.kwargs['photo_id']
 
-#         try:
-#             queryset = models.RecipeImage.objects.get(id=photo_id, recipe__slug=recipe_slug)
-#         except models.RecipeImage.DoesNotExist:
-#             raise NotFound('An image with this slug does not exist.')
+        try:
+            queryset = models.RecipeImage.objects.get(id=photo_id, recipe__slug=recipe_slug)
+        except models.RecipeImage.DoesNotExist:
+            raise NotFound('An image with this slug does not exist.')
 
-#         return queryset
+        return queryset
 
 class InstructionIngredientListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = serializers.InstructionIngredientSerializer

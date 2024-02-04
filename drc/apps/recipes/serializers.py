@@ -6,17 +6,17 @@ from . import models
 
 from drc.apps.notes import serializers as note_serializers
 
-# class RecipeImageSerializer(serializers.ModelSerializer):
+class RecipeImageSerializer(serializers.ModelSerializer):
 
-#     class Meta:
-#         model = models.RecipeImage
-#         fields = ('id','image')
-#         read_only_fields = ('id',)
+    class Meta:
+        model = models.RecipeImage
+        fields = ('id','image')
+        read_only_fields = ('id',)
     
-#     def create(self, validated_data):
-#         recipe = self.context.get('recipe')
+    def create(self, validated_data):
+        recipe = self.context.get('recipe')
 
-#         return models.RecipeImage.objects.create(recipe=recipe, **validated_data)
+        return models.RecipeImage.objects.create(recipe=recipe, **validated_data)
 
 
 # class InstructionImageSerializer(serializers.ModelSerializer):
@@ -121,7 +121,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     recipe_note = serializers.SerializerMethodField(read_only=True, required=False)
     instructions = InstructionSerializer(many=True, read_only=True)
     items = ItemSerializer(many=True, read_only=True)
-    # RecipeImage = RecipeImageSerializer(many=True, read_only=True, source='recipe_image')
+    RecipeImage = RecipeImageSerializer(many=True, read_only=True, source='recipe_image')
 
 
     class Meta:
@@ -134,7 +134,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             'has_cooked',
             'ingredient_count',
             'created_at','updated_at',
-            #'RecipeImage',
+            'RecipeImage',
             'instructions','items',
         )
         read_only_fields = ('id','slug',
@@ -194,15 +194,15 @@ class ShortRecipeSerializer(serializers.ModelSerializer):
     author = ShortProfileSerializer(read_only=True)
     has_like = serializers.SerializerMethodField(read_only=True, required=False)
     like_count = serializers.SerializerMethodField(read_only=True, required=False)
-    # RecipeImage = RecipeImageSerializer(many=True, read_only=True, source='recipe_image')
+    RecipeImage = RecipeImageSerializer(many=True, read_only=True, source='recipe_image')
 
     class Meta:
         model = models.Recipe
         fields = (
-             'id','title','total_time','slug','author','has_like','like_count',#,'is_purchasable','RecipeImage',
+             'id','title','total_time','slug','author','has_like','like_count','is_purchasable','RecipeImage',
         )
         read_only_fields = (
-             'id','title','total_time','slug','author','has_like','like_count',#,'is_purchasable',,'RecipeImage',
+             'id','title','total_time','slug','author','has_like','like_count','is_purchasable','RecipeImage',
         )
 
     def get_has_like(self, obj):

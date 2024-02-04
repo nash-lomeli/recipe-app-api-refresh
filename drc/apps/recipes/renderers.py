@@ -6,8 +6,8 @@ class RecipeJSONRenderer(SrcJSONRenderer):
     object_label_plural = 'recipes'
 
 
-# class RecipeImageJSONRenderer(SrcJSONRenderer):
-#     object_label = 'recipe_image'
+class RecipeImageJSONRenderer(SrcJSONRenderer):
+    object_label = 'recipe_image'
 
 
 class InstructionJSONRenderer(SrcJSONRenderer):

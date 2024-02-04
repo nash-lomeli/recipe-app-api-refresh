@@ -2,25 +2,25 @@ from django.db import models
 from django.conf import settings
 
 from drc.apps.core.models import TimestampedModel
-# from drc.apps.core.utils import recipe_image_file_path
+from drc.apps.core.utils import recipe_image_file_path
 
 
-# class RecipeImage(TimestampedModel):
-#     image = models.ImageField(null=True,
-#         upload_to=recipe_image_file_path,
-#         height_field="height_field",
-#         width_field="width_field",
-#     )
-#     height_field = models.IntegerField(default=0)
-#     width_field = models.IntegerField(default=0)
-#     recipe = models.ForeignKey(
-#         'recipes.Recipe',
-#         on_delete=models.CASCADE,
-#         related_name='recipe_image',
-#     )
+class RecipeImage(TimestampedModel):
+    image = models.ImageField(null=True,
+        upload_to=recipe_image_file_path,
+        height_field="height_field",
+        width_field="width_field",
+    )
+    height_field = models.IntegerField(default=0)
+    width_field = models.IntegerField(default=0)
+    recipe = models.ForeignKey(
+        'recipes.Recipe',
+        on_delete=models.CASCADE,
+        related_name='recipe_image',
+    )
 
-#     def __str__(self):
-#         return self.image
+    def __str__(self):
+        return self.image
 
 
 # class InstructionImage(TimestampedModel):
