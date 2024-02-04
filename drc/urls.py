@@ -26,4 +26,5 @@ urlpatterns = [
     path('api/follow/', include('drc.apps.follow.urls', namespace='follow')),
     path('api/recipes/', include('drc.apps.recipes.urls', namespace='recipes')),
     path('api/likes/', include('drc.apps.likes.urls', namespace='likes')),
+    path('api/saves/', include('drc.apps.saves.urls', namespace='saves')),
 ]
