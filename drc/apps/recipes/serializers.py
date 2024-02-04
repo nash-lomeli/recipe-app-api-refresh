@@ -32,17 +32,17 @@ from . import models
 #         return models.InstructionImage.objects.create(instruction=instruction, **validated_data)
 
 
-# class InstructionIngredientSerializer(serializers.ModelSerializer):
+class InstructionIngredientSerializer(serializers.ModelSerializer):
 
-#     class Meta:
-#         model = models.InstructionIngredient
-#         fields = ('id','body',)
-#         read_only_fields = ('id',)
+    class Meta:
+        model = models.InstructionIngredient
+        fields = ('id','body',)
+        read_only_fields = ('id',)
 
-#     def create(self, validated_data):
-#         instruction = self.context.get('instruction')
+    def create(self, validated_data):
+        instruction = self.context.get('instruction')
 
-#         return models.InstructionIngredient.objects.create(instruction=instruction, **validated_data)
+        return models.InstructionIngredient.objects.create(instruction=instruction, **validated_data)
 
   
 class InstructionSerializer(serializers.ModelSerializer):

@@ -41,17 +41,17 @@ from drc.apps.core.models import TimestampedModel
 #         return self.image
 
 
-# class InstructionIngredient(TimestampedModel):
-#     body = models.CharField(max_length=255)
+class InstructionIngredient(TimestampedModel):
+    body = models.CharField(max_length=255)
 
-#     instruction = models.ForeignKey(
-#         'recipes.Instruction',
-#         on_delete=models.CASCADE,
-#         related_name='instruction_ingredient',
-#     )
+    instruction = models.ForeignKey(
+        'recipes.Instruction',
+        on_delete=models.CASCADE,
+        related_name='instruction_ingredient',
+    )
 
-#     def __str__(self):
-#         return self.body
+    def __str__(self):
+        return self.body
 
 
 class Recipe(TimestampedModel):

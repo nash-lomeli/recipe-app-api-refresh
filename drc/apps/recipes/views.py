@@ -195,57 +195,57 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 #         return queryset
 
-# class InstructionIngredientListCreateAPIView(generics.ListCreateAPIView):
-#     serializer_class = serializers.InstructionIngredientSerializer
-#     permission_classes = (AllowAny,)
-#     renderer_classes = (renderers.InstructionIngredientJSONRenderer,)
-#     lookup_field = 'instruction__id'
-#     lookup_url_kwarg = 'instruction_id'
-#     queryset = models.InstructionIngredient.objects.all()
+class InstructionIngredientListCreateAPIView(generics.ListCreateAPIView):
+    serializer_class = serializers.InstructionIngredientSerializer
+    permission_classes = (AllowAny,)
+    renderer_classes = (renderers.InstructionIngredientJSONRenderer,)
+    lookup_field = 'instruction__id'
+    lookup_url_kwarg = 'instruction_id'
+    queryset = models.InstructionIngredient.objects.all()
 
-#     def filter_queryset(self, queryset):
-#         filters = {self.lookup_field: self.kwargs[self.lookup_url_kwarg]}
-#         return queryset.filter(**filters)
+    def filter_queryset(self, queryset):
+        filters = {self.lookup_field: self.kwargs[self.lookup_url_kwarg]}
+        return queryset.filter(**filters)
     
-#     def create(self, request, recipe_slug=None, instruction_id=None):
+    def create(self, request, recipe_slug=None, instruction_id=None):
 
-#         context = {
-#             'author': self.request.user.profile,
-#         }
+        context = {
+            'author': self.request.user.profile,
+        }
 
-#         serializer_data = request.data.get('instruction_ingredient', {})
+        serializer_data = request.data.get('instruction_ingredient', {})
 
-#         try:
-#             context['instruction'] = models.Instruction.objects.get(id=instruction_id)
-#         except models.Instruction.DoesNotExist:
-#             raise NotFound('An instruction with this ID does not exist.')
+        try:
+            context['instruction'] = models.Instruction.objects.get(id=instruction_id)
+        except models.Instruction.DoesNotExist:
+            raise NotFound('An instruction with this ID does not exist.')
 
-#         serializer = self.serializer_class(
-#             data=serializer_data,
-#             context=context,
-#         )
+        serializer = self.serializer_class(
+            data=serializer_data,
+            context=context,
+        )
 
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# class InstructionIngredientRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
-#     serializer_class = serializers.InstructionIngredientSerializer
-#     permission_classes = (AllowAny,)
-#     renderer_classes = (renderers.InstructionIngredientJSONRenderer,)
+class InstructionIngredientRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = serializers.InstructionIngredientSerializer
+    permission_classes = (AllowAny,)
+    renderer_classes = (renderers.InstructionIngredientJSONRenderer,)
 
-#     def get_object(self):
-#         instruction_id = self.kwargs['instruction_id']
-#         instruction_ingredient_id = self.kwargs['instruction_ingredient_id']
+    def get_object(self):
+        instruction_id = self.kwargs['instruction_id']
+        instruction_ingredient_id = self.kwargs['instruction_ingredient_id']
 
-#         try:
-#             queryset = models.InstructionIngredient.objects.get(id=instruction_ingredient_id, instruction=instruction_id)
-#         except models.InstructionIngredient.DoesNotExist:
-#             raise NotFound('An ingredient tied to this instruction does not exist.')
+        try:
+            queryset = models.InstructionIngredient.objects.get(id=instruction_ingredient_id, instruction=instruction_id)
+        except models.InstructionIngredient.DoesNotExist:
+            raise NotFound('An ingredient tied to this instruction does not exist.')
 
-#         return queryset
+        return queryset
 
 class InstructionListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = serializers.InstructionSerializer

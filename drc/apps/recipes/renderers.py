@@ -29,6 +29,6 @@ class IngredientJSONRenderer(SrcJSONRenderer):
     object_label_plural = 'ingredients'
 
 
-# class InstructionIngredientJSONRenderer(SrcJSONRenderer):
-#     object_label = 'instruction_ingredient'
-#     object_label_plural = 'instruction_ingredients'
+class InstructionIngredientJSONRenderer(SrcJSONRenderer):
+    object_label = 'instruction_ingredient'
+    object_label_plural = 'instruction_ingredients'
