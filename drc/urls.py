@@ -30,5 +30,6 @@ urlpatterns = [
     path('api/cooked/', include('drc.apps.cooked.urls', namespace='cooked')),
     path('api/completed_instructions/', include('drc.apps.completed_instructions.urls', namespace='completed_instructions')),
     path('api/notes/', include('drc.apps.notes.urls', namespace='notes')),
+    path('api/curated_collections/', include('drc.apps.curated_collections.urls', namespace='curated_collections')),
 
 ]

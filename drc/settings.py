@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'drc.apps.cooked',
     'drc.apps.completed_instructions',
     'drc.apps.notes',
+    'drc.apps.curated_collections',
 ]
 
 MIDDLEWARE = [
