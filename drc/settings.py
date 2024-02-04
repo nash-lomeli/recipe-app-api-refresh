@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'drc.apps.likes',
     'drc.apps.saves',
     'drc.apps.cooked',
+    'drc.apps.completed_instructions',
 ]
 
 MIDDLEWARE = [
