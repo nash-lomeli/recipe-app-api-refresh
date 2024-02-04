@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/users/', include('drc.apps.authentication.urls', namespace='authentication')),
     path('api/profiles/', include('drc.apps.profiles.urls', namespace='profiles')),
     path('api/follow/', include('drc.apps.follow.urls', namespace='follow')),
+    path('api/recipes/', include('drc.apps.recipes.urls', namespace='recipes')),
 ]

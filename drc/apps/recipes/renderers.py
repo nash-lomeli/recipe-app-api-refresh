@@ -10,9 +10,9 @@ class RecipeJSONRenderer(SrcJSONRenderer):
 #     object_label = 'recipe_image'
 
 
-# class InstructionJSONRenderer(SrcJSONRenderer):
-#     object_label = 'instruction'
-#     object_label_plural = 'instructions'
+class InstructionJSONRenderer(SrcJSONRenderer):
+    object_label = 'instruction'
+    object_label_plural = 'instructions'
 
 
 # class InstructionImageJSONRenderer(SrcJSONRenderer):

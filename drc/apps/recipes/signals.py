@@ -2,13 +2,15 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.utils.text import slugify
 
-from src.apps.core.utils import generate_random_string
+from drc.apps.core.utils import generate_random_string
 
 from .models import Recipe
 
 @receiver(pre_save, sender=Recipe)
 def add_slug_to_recipe_if_not_exists(sender, instance, *args, **kwargs):
     MAXIMUM_SLUG_LENGTH = 255
+
+    print('add_slug_to_recipe_if_not_exists')
 
     if instance and not instance.slug:
         slug = slugify(instance.title)

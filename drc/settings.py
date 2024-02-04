@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'drc.apps.core',
     'drc.apps.profiles',
     'drc.apps.follow',
+    'drc.apps.recipes',
 ]
 
 MIDDLEWARE = [
