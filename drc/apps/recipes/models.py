@@ -89,13 +89,13 @@ class Instruction(TimestampedModel):
         related_name='instructions',
     )
 
-    # completed = models.ManyToManyField(
-    #     'profiles.Profile',	
-    #     related_name='completed_by',	
-    #     blank=True,
-    #     symmetrical=False,
-    #     through='completed_instructions.CompletedInstruction'
-    # )
+    completed = models.ManyToManyField(
+        'profiles.Profile',	
+        related_name='completed_by',	
+        blank=True,
+        symmetrical=False,
+        through='completed_instructions.CompletedInstruction'
+    )
 
     def __str__(self):
         return self.body

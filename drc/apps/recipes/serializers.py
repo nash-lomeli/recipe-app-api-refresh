@@ -50,17 +50,16 @@ class InstructionSerializer(serializers.ModelSerializer):
     # Commenting out InstructionImage until we can provide images at the instruction level
     #InstructionImage = InstructionImageSerializer(many=True, read_only=True, source='instruction_image')
     instruction_ingredients = InstructionIngredientSerializer(many=True, read_only=True, source='instruction_ingredient')
-    # is_completed = serializers.SerializerMethodField(read_only=True, required=False)
+    is_completed = serializers.SerializerMethodField(read_only=True, required=False)
 
 
     class Meta:
         model = models.Instruction
         fields = (
             'id','body','display_order',
-            'instruction_ingredients',)
-            #'is_completed',
-        #)
-        read_only_fields = ('id',)#'is_completed',)
+            'instruction_ingredients',
+            'is_completed',)
+        read_only_fields = ('id','is_completed',)
 
     def create(self, validated_data):
         recipe = self.context.get('recipe')
@@ -68,18 +67,18 @@ class InstructionSerializer(serializers.ModelSerializer):
 
         return models.Instruction.objects.create(recipe=recipe, **validated_data)
     
-    # def get_is_completed(self, obj):
-    #     request = self.context.get('request', None)
+    def get_is_completed(self, obj):
+        request = self.context.get('request', None)
 
-    #     if request is None:
-    #         return False
+        if request is None:
+            return False
         
-    #     if request.user.is_authenticated == False:
-    #         return False
+        if request.user.is_authenticated == False:
+            return False
         
-    #     instruction = obj
+        instruction = obj
 
-    #     return request.user.profile.has_completed(instruction)
+        return request.user.profile.has_completed(instruction)
 
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -140,7 +139,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ('id','slug',
             'has_like','like_count',
-            #'has_cooked',
+            'has_cooked',
             'ingredient_count',
             'created_at','updated_at',
         )

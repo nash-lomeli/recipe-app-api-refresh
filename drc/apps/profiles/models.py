@@ -52,14 +52,14 @@ class Profile(TimestampedModel):
     def has_cooked(self, recipe):
         return self.cooked_recipe.filter(recipe=recipe).exists()
 
-    # def has_completed(self, instruction):
-    #     return self.completed_instruction.filter(instruction=instruction).exists()
+    def has_completed(self, instruction):
+        return self.completed_instruction.filter(instruction=instruction).exists()
 
     def recipe_note(self, recipe):
         return self.note_recipe.filter(recipe=recipe).first()
     
-    # def recipe_count(self):
-    #     return self.recipes.count()
+    def recipe_count(self):
+        return self.recipes.count()
 
     def like_count(self):
         result = recipe_models.Recipe.objects.filter(author=self).aggregate(like_count=Count('like__id'))
