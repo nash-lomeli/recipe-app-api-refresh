@@ -199,10 +199,10 @@ class ShortRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Recipe
         fields = (
-             'id','title','total_time',#'slug','author','has_like','like_count','RecipeImage',
+             'id','title','total_time','slug','author','has_like','like_count','RecipeImage',
         )
         read_only_fields = (
-             'id','title','total_time',#'slug','author','has_like','like_count',
+             'id','title','total_time','slug','author','has_like','like_count',
         )
 
     def get_has_like(self, obj):
