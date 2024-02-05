@@ -192,17 +192,17 @@ class RecipeSerializer(serializers.ModelSerializer):
 
 class ShortRecipeSerializer(serializers.ModelSerializer):
     author = ShortProfileSerializer(read_only=True)
+    RecipeImage = RecipeImageSerializer(many=True, read_only=True, source='recipe_image')
     has_like = serializers.SerializerMethodField(read_only=True, required=False)
     like_count = serializers.SerializerMethodField(read_only=True, required=False)
-    RecipeImage = RecipeImageSerializer(many=True, read_only=True, source='recipe_image')
 
     class Meta:
         model = models.Recipe
         fields = (
-             'id','title','total_time','slug','author','has_like','like_count','is_purchasable','RecipeImage',
+             'id','title','total_time',#'slug','author','has_like','like_count','RecipeImage',
         )
         read_only_fields = (
-             'id','title','total_time','slug','author','has_like','like_count','is_purchasable','RecipeImage',
+             'id','title','total_time',#'slug','author','has_like','like_count',
         )
 
     def get_has_like(self, obj):

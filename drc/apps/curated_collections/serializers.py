@@ -5,15 +5,15 @@ from . import models
 from drc.apps.recipes import models as recipe_models
 from drc.apps.profiles import models as profile_models
 
-# class RecipeImageSerializer(serializers.ModelSerializer):
+class RecipeImageSerializer(serializers.ModelSerializer):
 
 
-#     class Meta:
-#         model = recipe_models.RecipeImage
-#         fields = (
-#             'id','image'
-#         )
-#         read_only_fields = ('id','image',)
+    class Meta:
+        model = recipe_models.RecipeImage
+        fields = (
+            'id','image'
+        )
+        read_only_fields = ('id','image',)
 
 
 class ShortProfileSerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class ShortProfileSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    #RecipeImage = RecipeImageSerializer(many=True, read_only=True, source='recipe_image')
+    RecipeImage = RecipeImageSerializer(many=True, read_only=True, source='recipe_image')
     author = ShortProfileSerializer(read_only=True)
     has_like = serializers.SerializerMethodField(read_only=True, required=False)
     like_count = serializers.SerializerMethodField(read_only=True, required=False)
@@ -39,10 +39,10 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = recipe_models.Recipe
         fields = (
             'id','title','author','total_time','servings',
-            'slug','has_like','like_count',#'RecipeImage',
+            'slug','has_like','like_count','RecipeImage',
         )
         read_only_fields = ('id','title','author','total_time','servings',
-            'slug','has_like','like_count',#'RecipeImage',
+            'slug','has_like','like_count','RecipeImage',
         )
 
     def get_has_like(self, obj):

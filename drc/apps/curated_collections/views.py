@@ -17,7 +17,7 @@ class CuratedCollectionViewSet(viewsets.ModelViewSet):
     renderer_classes = (renderers.CuratedCollectionJSONRenderer,)
     lookup_field = 'id'
     queryset = models.CuratedCollection.objects. \
-            prefetch_related('collection_recipe','collection_recipe__recipe'#,'collection_recipe__recipe__recipe_image'
+            prefetch_related('collection_recipe','collection_recipe__recipe','collection_recipe__recipe__recipe_image'
                 ,'collection_recipe__recipe__author','collection_recipe__recipe__author__user',
                 ).all()
 
