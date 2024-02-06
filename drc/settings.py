@@ -122,13 +122,6 @@ REST_FRAMEWORK = {
 STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3.S3Storage",
-        # "OPTIONS": {
-        #     "AWS_ACCESS_KEY_ID": 'AKIA5FTZC3FKLTBAORXM',
-        #     "AWS_SECRET_ACCESS_KEY": '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',
-        #     "AWS_STORAGE_BUCKET_NAME": 'recipe-app-api-refresh-recipe-images-1',
-
-        #     "AWS_S3_FILE_OVERWRITE": False,
-        # },
     },
 }
 
