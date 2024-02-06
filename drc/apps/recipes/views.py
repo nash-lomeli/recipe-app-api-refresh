@@ -39,10 +39,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
             .only('id','title','slug','total_time','slug','author__id','author__user__username') \
             .all()
 
-        # queryset = models.Recipe.objects \
-        #     .select_related('author','author__user') \
-        #     .only('id','title','slug','total_time','slug','author__id','author__user__username') \
-        #     .all()
 
         author = self.request.query_params.get('author', None)
         if author is not None:
