@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+from drc import secrets
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-06ei#444!q7-!_hf8jzyrygqve1$*r)346ize$v$onc=a%nl(5'
+SECRET_KEY = secrets.SECRET_KEY_SECRET
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -103,11 +103,11 @@ WSGI_APPLICATION = 'drc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'recipe_app_api_refresh_database_2',
-        'USER': 'nashlomeli',
-        'PASSWORD': 'password',
-        'HOST': 'recipe-app-api-refresh-database-2.cxi6am64c46v.us-east-2.rds.amazonaws.com',
-        'PORT': '5432',
+        'NAME': secrets.NAME_SECRET,
+        'USER': secrets.USER_SECRET,
+        'PASSWORD': secrets.PASSWORD_SECRET,
+        'HOST': secrets.HOST_SECRET,
+        'PORT': secrets.PORT_SECRET,
     }
 }
 
@@ -173,9 +173,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AWS_ACCESS_KEY_ID = 'AKIA5FTZC3FKLTBAORXM'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'recipe-app-api-refresh-recipe-images-1'
+AWS_ACCESS_KEY_ID = secrets.AWS_ACCESS_KEY_ID_SECRET
+AWS_SECRET_ACCESS_KEY = secrets.AWS_SECRET_ACCESS_KEY_SECRET
+AWS_STORAGE_BUCKET_NAME = secrets.AWS_STORAGE_BUCKET_NAME_SECRET
 
 AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
