@@ -103,10 +103,10 @@ WSGI_APPLICATION = 'drc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'recipe_app_api_refresh_database_1',
+        'NAME': 'recipe_app_api_refresh_database_2',
         'USER': 'nashlomeli',
         'PASSWORD': 'password',
-        'HOST': 'recipe-app-api-refresh-database-1.cxi6am64c46v.us-east-2.rds.amazonaws.com',
+        'HOST': 'recipe-app-api-refresh-database-2.cxi6am64c46v.us-east-2.rds.amazonaws.com',
         'PORT': '5432',
     }
 }

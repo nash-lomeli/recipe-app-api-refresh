@@ -470,10 +470,10 @@ class RecipeFeedListAPIView(generics.ListAPIView):
         return queryset.distinct()
 
 
-# class SearchListAPIView(generics.ListAPIView):
-#     serializer_class = serializers.RecipeSerializer
-#     permission_classes = (AllowAny,)
-#     renderer_classes = (renderers.RecipeJSONRenderer,)
-#     queryset = models.Recipe.objects.all()
-#     filter_backends = [filters.SearchFilter]
-#     search_fields = ['title','cuisine','description','items__name']
+class SearchListAPIView(generics.ListAPIView):
+    serializer_class = serializers.RecipeSerializer
+    permission_classes = (AllowAny,)
+    renderer_classes = (renderers.RecipeJSONRenderer,)
+    queryset = models.Recipe.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title','cuisine','description','items__name']
