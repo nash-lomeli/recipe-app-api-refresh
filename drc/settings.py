@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'drc.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'NAME': os.path.join(BASE_DIR,'db.sqlite3'),
 #     }
 # }
 
@@ -109,16 +109,21 @@ import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': secrets.NAME_SECRET,
-#         'USER': secrets.USER_SECRET,
-#         'PASSWORD': secrets.PASSWORD_SECRET,
-#         'HOST': secrets.HOST_SECRET,
-#         'PORT': secrets.PORT_SECRET,
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': secrets.NAME_SECRET,
+        # 'USER': secrets.USER_SECRET,
+        # 'PASSWORD': secrets.PASSWORD_SECRET,
+        # 'HOST': secrets.HOST_SECRET,
+        # 'PORT': secrets.PORT_SECRET,
+    }
+}
+
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
+
 
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'drc.apps.core.exceptions.core_exception_handler',
