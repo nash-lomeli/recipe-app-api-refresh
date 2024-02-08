@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-# from drc import secrets
+from drc import secrets
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,8 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 
-#SECRET_KEY = secrets.SECRET_KEY_SECRET
-SECRET_KEY = os.environ['SECRET_KEY_SECRET']
+SECRET_KEY = secrets.SECRET_KEY_SECRET
+#SECRET_KEY = os.environ['SECRET_KEY_SECRET']
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -108,17 +108,17 @@ WSGI_APPLICATION = 'drc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': secrets.NAME_SECRET,
-        # 'USER': secrets.USER_SECRET,
-        # 'PASSWORD': secrets.PASSWORD_SECRET,
-        # 'HOST': secrets.HOST_SECRET,
-        # 'PORT': secrets.PORT_SECRET,
+        'NAME': secrets.NAME_SECRET,
+        'USER': secrets.USER_SECRET,
+        'PASSWORD': secrets.PASSWORD_SECRET,
+        'HOST': secrets.HOST_SECRET,
+        'PORT': secrets.PORT_SECRET,
     }
 }
 
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+# import dj_database_url
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 
 REST_FRAMEWORK = {
@@ -168,7 +168,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 STATIC_URL = 'static/'
 
 # Default primary key field type
@@ -176,13 +176,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# AWS_ACCESS_KEY_ID = secrets.AWS_ACCESS_KEY_ID_SECRET
-# AWS_SECRET_ACCESS_KEY = secrets.AWS_SECRET_ACCESS_KEY_SECRET
-# AWS_STORAGE_BUCKET_NAME = secrets.AWS_STORAGE_BUCKET_NAME_SECRET
+AWS_ACCESS_KEY_ID = secrets.AWS_ACCESS_KEY_ID_SECRET
+AWS_SECRET_ACCESS_KEY = secrets.AWS_SECRET_ACCESS_KEY_SECRET
+AWS_STORAGE_BUCKET_NAME = secrets.AWS_STORAGE_BUCKET_NAME_SECRET
 
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID_SECRET']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY_SECRET']
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME_SECRET']
+# AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID_SECRET']
+# AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY_SECRET']
+# AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME_SECRET']
 
 AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
